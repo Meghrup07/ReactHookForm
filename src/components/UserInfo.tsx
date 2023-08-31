@@ -32,10 +32,15 @@ function UserInfo() {
           User Info
         </Typography>
         <div className="mt-4 text-end">
-          <Button onClick={()=>(navigate("/"))} type="button" variant="contained" color="primary">
+          <Button
+            onClick={() => navigate("/")}
+            type="button"
+            variant="contained"
+            color="primary"
+          >
             Back to Users
           </Button>
-        </div>
+        </div>  
         {userInfo && (
           <div className="detail-card mt-5" key={userInfo.id}>
             <div className="card-description">

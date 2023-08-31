@@ -61,3 +61,11 @@
   height: 100%;
   object-fit: cover;
 }
+
+.card{
+  margin: auto;
+}
+
+.navbar{
+  background-color:#e3f2fd;
+}
