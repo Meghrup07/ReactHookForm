@@ -17,6 +17,7 @@ function App() {
     <div className="App">
       {isAuth && <Header />}
       <BrowserRouter>
+
         <Routes>
           <Route path="/login" Component={Login} />
           <Route element={<ProtectedRoute children={<UserList />} />}>
@@ -26,6 +27,7 @@ function App() {
             <Route path="/edit/:id" element={<EditUser />} />
           </Route>
         </Routes>
+
       </BrowserRouter>
     </div>
   );
