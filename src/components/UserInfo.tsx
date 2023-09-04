@@ -3,27 +3,30 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSingleUser } from "../services/UserServices";
 import { userDetails } from "../types/types";
+import { useGetSingeUserQuery } from "../store/api/api";
 
 function UserInfo() {
   const { id } = useParams();
 
   const navigate = useNavigate();
 
-  const [userInfo, setUserInfo] = useState<userDetails>();
+  const { data } = useGetSingeUserQuery(id);
 
-  const getUserDetails = () => {
-    getSingleUser(id)
-      .then((res: any) => {
-        setUserInfo(res.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
+  // const [userInfo, setUserInfo] = useState<userDetails>();
 
-  useEffect(() => {
-    getUserDetails();
-  }, []);
+  // const getUserDetails = () => {
+  //   getSingleUser(id)
+  //     .then((res: any) => {
+  //       setUserInfo(res.data);
+  //     })
+  //     .catch((error) => {
+  //       alert(error);
+  //     });
+  // };
+
+  // useEffect(() => {
+  //   getUserDetails();
+  // }, []);
 
   return (
     <Container sx={{ mt: 4 }} maxWidth="lg">
@@ -40,33 +43,33 @@ function UserInfo() {
           >
             Back to Users
           </Button>
-        </div>  
-        {userInfo && (
-          <div className="detail-card mt-5" key={userInfo.id}>
+        </div>
+        {data && (
+          <div className="detail-card mt-5" key={data.id}>
             <div className="card-description">
               <Typography className="card-description-title">
-                {userInfo.firstName} {userInfo.lastName}
+                {data.firstName} {data.lastName}
               </Typography>
 
               <Typography className="card-description-profession">
-                Email: {userInfo.email}
+                Email: {data.email}
               </Typography>
 
               <Typography className="card-description-company">
-                Mobile No: {userInfo.mobileNumber}
+                Mobile No: {data.mobileNumber}
               </Typography>
 
               <Typography className="card-description-company">
-                Role: {userInfo.role}
+                Role: {data.role}
               </Typography>
 
               <div className="card-description-social">
                 <Typography className="card-description-social-follow">
-                  DOB: {userInfo.dob}
+                  DOB: {data.dob}
                 </Typography>
               </div>
             </div>
-            <img alt="img" src={userInfo.pic} className="card-image" />
+            <img alt="img" src={data.pic} className="card-image" />
           </div>
         )}
       </Card>

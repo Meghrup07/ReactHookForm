@@ -15,8 +15,15 @@ function App() {
 
   return (
     <div className="App">
-      {isAuth && <Header />}
-      <BrowserRouter>
+      {/* <UserList /> */}
+      <Routes>
+        <Route path="/" element={<UserList />} />
+        <Route path="/userInfo/:id" element={<UserInfo />} />
+        <Route path="/add" element={<AddUser />} />
+        <Route path="/edit/:id" element={<EditUser />} />
+      </Routes>
+      {/* {isAuth && <Header />}
+
         <Routes>
           <Route path="/login" Component={Login} />
           <Route element={<ProtectedRoute children={<UserList />} />}>
@@ -26,7 +33,7 @@ function App() {
             <Route path="/edit/:id" element={<EditUser />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
     </div>
   );
 }

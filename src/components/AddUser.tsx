@@ -14,6 +14,7 @@ import * as Yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { userDetails } from "../types/types";
+import { useNewPostMutation } from "../store/api/api";
 function AddUser() {
   const phoneRegExp =
     /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
@@ -50,15 +51,20 @@ function AddUser() {
 
   const navigate = useNavigate();
 
+  const [newPost] = useNewPostMutation();
+
   const formSubmitHandler = (userData: userDetails) => {
-    addUser(userData)
-      .then((res: any) => {
-        alert("User Added Successfully!");
-        navigate("/");
-      })
-      .catch((error) => {
-        alert(error);
-      });
+    // addUser(userData)
+    //   .then((res: any) => {
+    //     alert("User Added Successfully!");
+    //     navigate("/");
+    //   })
+    //   .catch((error) => {
+    //     alert(error);
+    //   });
+    newPost(userData);
+    navigate("/");
+    alert("User Added Successfully!");
   };
 
   return (
