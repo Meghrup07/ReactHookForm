@@ -7,33 +7,14 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { addUser } from "../services/UserServices";
-import * as Yup from "yup";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { userDetails } from "../types/types";
-import { useNewPostMutation } from "../store/api/api";
-function AddUser() {
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+import { TUserCreate } from "../../types/types";
+import { useNewPostMutation } from "../../store/api/api";
+import { addUserValidationSchema } from "../../shared/Validations";
 
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
-    email: Yup.string()
-      .required("Email is required")
-      .email("Please enter valid email"),
-    mobileNumber: Yup.string()
-      .required("Mobile no. is required")
-      .matches(phoneRegExp, "Please enter valid mobile no.")
-      .min(10, "Please enter valid mobile no.")
-      .max(10, "Please enter valid mobile no."),
-    dob: Yup.string().required("DOB is required"),
-    role: Yup.string().required("Role is required"),
-    pic: Yup.string(),
-  });
+function AddUser() {
 
   const {
     handleSubmit,
@@ -41,7 +22,7 @@ function AddUser() {
     formState: { errors },
   } = useForm({
     mode: "all",
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(addUserValidationSchema),
   });
   const role = [
     { key: "admin", value: "Admin" },
@@ -53,18 +34,13 @@ function AddUser() {
 
   const [newPost] = useNewPostMutation();
 
-  const formSubmitHandler = (userData: userDetails) => {
-    // addUser(userData)
-    //   .then((res: any) => {
-    //     alert("User Added Successfully!");
-    //     navigate("/");
-    //   })
-    //   .catch((error) => {
-    //     alert(error);
-    //   });
-    newPost(userData);
-    navigate("/");
-    alert("User Added Successfully!");
+  const formSubmitHandler = (userData: TUserCreate) => {
+    newPost(userData).unwrap().then((res) => {
+      alert("User Added Successfully!");
+      navigate("/");
+    }).catch((error) => {
+      alert(error)
+    });
   };
 
   return (

@@ -8,14 +8,17 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import { editUser, getSingleUser } from "../services/UserServices";
-import * as Yup from "yup";
+import { useGetSingeUserQuery, useUpdateUserMutation } from "../../store/api/api";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
+import { TUserDetails } from "../../types/types";
+import { editUserValidationSchema } from "../../shared/Validations";
 
 function EditUser() {
   const { id } = useParams();
+
+  const { data } = useGetSingeUserQuery(id ?? skipToken);
 
   const navigate = useNavigate();
 
@@ -25,25 +28,6 @@ function EditUser() {
     { key: "student", value: "Student" },
   ];
 
-  const phoneRegExp =
-    /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
-
-  const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
-    email: Yup.string()
-      .required("Email is required")
-      .email("Please enter valid email"),
-    mobileNumber: Yup.string()
-      .required("Mobile no. is required")
-      .matches(phoneRegExp, "Please enter valid mobile no.")
-      .min(10, "Please enter valid mobile no.")
-      .max(10, "Please enter valid mobile no."),
-    dob: Yup.string().required("DOB is required"),
-    role: Yup.string().required("Role is required"),
-    pic: Yup.string(),
-  });
-
   const {
     handleSubmit,
     reset,
@@ -51,6 +35,7 @@ function EditUser() {
     formState: { errors },
   } = useForm({
     mode: "all",
+    values: data,
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -60,35 +45,20 @@ function EditUser() {
       dob: "",
       pic: "",
     },
-    resolver: yupResolver(validationSchema),
+    resolver: yupResolver(editUserValidationSchema),
   });
 
-  const handleFormSubmit = (userData: any) => {
-    editUser(id, userData)
-      .then((res: any) => {
-        alert("User updated successfully!");
-        navigate("/");
-      })
-      .catch((error) => {
-        alert(error);
-      });
+  const [updatePost] = useUpdateUserMutation();
+
+  const handleFormSubmit = (userData: TUserDetails) => {
+    updatePost(userData).unwrap().then((res) => {
+      alert("User updated successfully!")
+      navigate("/");
+    }).catch((error) => {
+      alert(error)
+    })
   };
 
-  const getUserDetails = () => {
-    getSingleUser(id)
-      .then((res: any) => {
-        reset(res.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
-  useEffect(() => {
-    if (id) {
-      getUserDetails();
-    }
-  }, [id]);
 
   return (
     <Container sx={{ mt: 4 }} maxWidth="lg">

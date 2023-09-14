@@ -15,43 +15,24 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
-import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { userDetails } from "../types/types";
-import { deleteUser, getUser } from "../services/UserServices";
-import { useDeleteUserMutation, useGetUserQuery } from "../store/api/api";
+import { useDeleteUserMutation, useGetUserQuery } from "../../store/api/api";
 
 function UserList() {
   const navigate = useNavigate();
-
   const { data } = useGetUserQuery();
 
   const [deletePost] = useDeleteUserMutation();
 
-  // const [userList, setUserList] = useState<userDetails[]>([])
-
-  // const getUserList = () => {
-  //     getUser().then((res: any) => {
-  //         setUserList(res.data);
-  //     }).catch((error) => {
-  //         alert(error)
-  //     })
-  // }
-
-  //   const deleteHandler = (id: any) => {
-  //       deleteUser(id).then((res) => {
-  //           if (window.confirm("Do you really want to delete?")) {
-  //               alert("User deleted successfully!")
-  //           }
-  //           getUserList()
-  //       }).catch((error) => {
-  //           alert(error)
-  //       })
-  //   };
-
-  // useEffect(() => {
-  //     getUserList()
-  // }, [])
+  const deleteHandler = (id: any) => {
+    if (window.confirm("Do you really want to delete?")) {
+      deletePost(id).unwrap().then((res) => {
+        alert("Delete Sucessfully!")
+      }).catch((error) => {
+        alert(error)
+      })
+    }
+  }
 
   return (
     <Container sx={{ mt: 4 }} maxWidth="lg">
@@ -105,10 +86,10 @@ function UserList() {
                         <EditIcon color="primary" />
                       </Tooltip>
                     </Button>
-                    <Button onClick={() => deletePost(user.id)} sx={{ ml: 1 }}>
+                    <Button onClick={() => deleteHandler(user.id)} sx={{ ml: 1 }}>
                       <Tooltip title="Delete" placement="top">
                         <DeleteIcon color="error" />
-                      </Tooltip>    
+                      </Tooltip>
                     </Button>
                   </TableCell>
                 </TableRow>

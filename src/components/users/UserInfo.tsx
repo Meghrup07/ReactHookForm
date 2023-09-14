@@ -1,32 +1,15 @@
 import { Button, Card, Container, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { useNavigate, useParams } from "react-router-dom";
-import { getSingleUser } from "../services/UserServices";
-import { userDetails } from "../types/types";
-import { useGetSingeUserQuery } from "../store/api/api";
+import { useGetSingeUserQuery } from "../../store/api/api";
+
 
 function UserInfo() {
   const { id } = useParams();
 
   const navigate = useNavigate();
 
-  const { data } = useGetSingeUserQuery(id);
-
-  // const [userInfo, setUserInfo] = useState<userDetails>();
-
-  // const getUserDetails = () => {
-  //   getSingleUser(id)
-  //     .then((res: any) => {
-  //       setUserInfo(res.data);
-  //     })
-  //     .catch((error) => {
-  //       alert(error);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getUserDetails();
-  // }, []);
+  const { data } = useGetSingeUserQuery(id ?? skipToken);
 
   return (
     <Container sx={{ mt: 4 }} maxWidth="lg">

@@ -11,14 +11,14 @@
       "id": 0
     },
     {
-      "firstName": "Prashant",
-      "lastName": "Patanwadiya",
-      "email": "pras@yopmail.com",
-      "mobileNumber": "7766445577",
-      "dob": "1997-06-19",
-      "role": "Teacher",
+      "id": 1,
       "pic": "https://pub-static.fotor.com/assets/projects/pages/e174890b7d614925a4f275b67873ffb7/300w/fotor-01b0203e5e414695890876d329e551d3.jpg",
-      "id": 1
+      "role": "Teacher",
+      "dob": "1997-06-19",
+      "mobileNumber": "7766445577",
+      "email": "pras@yopmail.com",
+      "lastName": "Patanwadiya",
+      "firstName": "Prashant"
     },
     {
       "firstName": "Kavya",

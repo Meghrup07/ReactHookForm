@@ -7,34 +7,35 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { authAction } from "../store/auth";
+import { loginValidationSchema } from "../../shared/Validations";
+import { useLoginMutation } from "../../store/api/loginApi";
+import { authAction } from "../../store/slice/auth";
+import { TLogin } from "../../types/types";
 
 function Login() {
   const navigate = useNavigate();
-
   const dispatch = useDispatch();
 
-  const validationSchema = Yup.object().shape({
-    email: Yup.string()
-      .required("Email is required")
-      .email("Please Enter valid email"),
-    password: Yup.string().required("Password is required"),
-  });
+  const [login] = useLoginMutation()
 
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm({ mode: "all", resolver: yupResolver(validationSchema) });
+  } = useForm({ mode: "all", resolver: yupResolver(loginValidationSchema) });
 
-  const loginHandler = () => {
-    dispatch(authAction.login());
-    navigate("/");
+  const loginHandler = (user: TLogin) => {
+    login(user).unwrap().then((res) => {
+      dispatch(authAction.login());
+      const token = res.result.token;
+      localStorage.setItem("token", token)
+      navigate("/");
+    }).catch((error) => {
+      alert(error)
+    })
   };
 
   return (

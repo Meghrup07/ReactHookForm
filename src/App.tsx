@@ -1,39 +1,25 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import AddUser from "./components/AddUser";
-import EditUser from "./components/EditUser";
-import UserInfo from "./components/UserInfo";
-import UserList from "./components/UserList";
-import { useSelector } from "react-redux";
-import Login from "./components/Login";
-import ProtectedRoute from "./utils/ProtectedRoute";
-import Header from "./components/Header";
+import Login from "./components/auth/Login";
+import UserList from "./components/users/UserList";
+import UserInfo from "./components/users/UserInfo";
+import AddUser from "./components/users/AddUser";
+import EditUser from "./components/users/EditUser";
+import Layout from "./layout/Layout";
 
 function App() {
-  const isAuth = useSelector((state: any) => state.auth.isAuthenicated);
-
   return (
     <div className="App">
-      {/* <UserList /> */}
       <Routes>
-        <Route path="/" element={<UserList />} />
-        <Route path="/userInfo/:id" element={<UserInfo />} />
-        <Route path="/add" element={<AddUser />} />
-        <Route path="/edit/:id" element={<EditUser />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Layout />}>
+          <Route path="" element={<UserList />} />
+          <Route path="userInfo/:id" element={<UserInfo />} />
+          <Route path="add" element={<AddUser />} />
+          <Route path="edit/:id" element={<EditUser />} />
+        </Route>
       </Routes>
-      {/* {isAuth && <Header />}
-
-        <Routes>
-          <Route path="/login" Component={Login} />
-          <Route element={<ProtectedRoute children={<UserList />} />}>
-            <Route path="/" element={<UserList />} />
-            <Route path="/userInfo/:id" element={<UserInfo />} />
-            <Route path="/add" element={<AddUser />} />
-            <Route path="/edit/:id" element={<EditUser />} />
-          </Route>
-        </Routes>
-      </BrowserRouter> */}
     </div>
   );
 }
