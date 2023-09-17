@@ -1,12 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { TLogin, TLoginResponse } from "../../types/types";
+import { TLogin, TLoginResponse } from "../../../types/types";
+import { baseQueryWithReauth } from "../interceptor/interceptor";
 
 
 export const authApi = createApi({
     reducerPath: 'authApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: 'https://api-dev.oneviz.dev/user-service/api/v1'
-    }),
+    baseQuery: baseQueryWithReauth,
+    // fetchBaseQuery({
+    //     baseUrl: ''
+    // }),
     tagTypes: ["Posts"],
     endpoints: (builder) => ({
         login: builder.mutation<TLoginResponse, TLogin>({

@@ -7,21 +7,46 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { TUserCreate } from "../../types/types";
-import { useNewPostMutation } from "../../store/api/api";
-import { addUserValidationSchema } from "../../shared/Validations";
+import { TUserCreate, TUserDetails } from "../../types/types";
+import { useGetSingeUserQuery, useNewPostMutation, useUpdateUserMutation } from "../../shared/store/api/api";
+import { addUserValidationSchema } from "../../shared/validations/Validations";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
+
 
 function AddUser() {
 
+  const { id } = useParams();
+
+  const { data } = useGetSingeUserQuery(id ?? skipToken);
+
+  const isAdd = !id;
+
+  const navigate = useNavigate();
+
+  const [newPost] = useNewPostMutation();
+
+  const [updatePost] = useUpdateUserMutation();
+
   const {
     handleSubmit,
+    reset,
     control,
     formState: { errors },
   } = useForm({
     mode: "all",
+    values: data,
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      mobileNumber: "",
+      role: "",
+      dob: "",
+      pic: "",
+    },
     resolver: yupResolver(addUserValidationSchema),
   });
   const role = [
@@ -30,18 +55,29 @@ function AddUser() {
     { key: "student", value: "Student" },
   ];
 
-  const navigate = useNavigate();
+  const formSubmitHandler = (data: TUserCreate) => {
+    return isAdd
+      ? createUser(data)
+      : updateUser({ id, ...data });
+  };
 
-  const [newPost] = useNewPostMutation();
-
-  const formSubmitHandler = (userData: TUserCreate) => {
+  const createUser = (userData: TUserCreate) => {
     newPost(userData).unwrap().then((res) => {
       alert("User Added Successfully!");
       navigate("/");
     }).catch((error) => {
       alert(error)
     });
-  };
+  }
+
+  const updateUser = (userData: TUserDetails) => {
+    updatePost(userData).unwrap().then((res) => {
+      alert("User updated successfully!")
+      navigate("/");
+    }).catch((error) => {
+      alert(error)
+    })
+  }
 
   return (
     <Container sx={{ mt: 4 }} maxWidth="lg">
@@ -178,7 +214,9 @@ function AddUser() {
           </Grid>
           <div className="mt-4 text-center">
             <Button type="submit" variant="contained" color="success">
-              Save
+              {isAdd
+                ? "Save"
+                : "Update"}
             </Button>
             <Button
               onClick={() => navigate("/")}

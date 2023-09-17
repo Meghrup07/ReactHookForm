@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useDispatch } from "react-redux";
-import { authAction } from "../../store/slice/auth";
+import { authAction } from "../../shared/store/slice/auth";
 
 const pages = ["Users", "Add User"];
 

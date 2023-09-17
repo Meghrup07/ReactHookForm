@@ -1,7 +1,7 @@
 import { Button, Card, Container, Typography } from "@mui/material";
 import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingeUserQuery } from "../../store/api/api";
+import { useGetSingeUserQuery } from "../../shared/store/api/api";
 
 
 function UserInfo() {

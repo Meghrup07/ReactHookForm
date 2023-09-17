@@ -16,7 +16,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
-import { useDeleteUserMutation, useGetUserQuery } from "../../store/api/api";
+import { useDeleteUserMutation, useGetUserQuery } from "../../shared/store/api/api";
 
 function UserList() {
   const navigate = useNavigate();

@@ -10,9 +10,9 @@ import {
 import { Controller, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { loginValidationSchema } from "../../shared/Validations";
-import { useLoginMutation } from "../../store/api/loginApi";
-import { authAction } from "../../store/slice/auth";
+import { loginValidationSchema } from "../../shared/validations/Validations";
+import { useLoginMutation } from "../../shared/store/api/loginApi";
+import { authAction } from "../../shared/store/slice/auth";
 import { TLogin } from "../../types/types";
 
 function Login() {

@@ -5,7 +5,6 @@ import Login from "./components/auth/Login";
 import UserList from "./components/users/UserList";
 import UserInfo from "./components/users/UserInfo";
 import AddUser from "./components/users/AddUser";
-import EditUser from "./components/users/EditUser";
 import Layout from "./layout/Layout";
 
 function App() {
@@ -17,7 +16,7 @@ function App() {
           <Route path="" element={<UserList />} />
           <Route path="userInfo/:id" element={<UserInfo />} />
           <Route path="add" element={<AddUser />} />
-          <Route path="edit/:id" element={<EditUser />} />
+          <Route path="edit/:id" element={<AddUser />} />
         </Route>
       </Routes>
     </div>

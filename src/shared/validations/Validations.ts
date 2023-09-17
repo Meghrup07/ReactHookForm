@@ -26,22 +26,5 @@ export const addUserValidationSchema = Yup.object().shape({
     dob: Yup.string().required("DOB is required"),
     role: Yup.string().required("Role is required"),
     pic: Yup.string(),
-});
-
-
-export const editUserValidationSchema = Yup.object().shape({
-    firstName: Yup.string().required("First name is required"),
-    lastName: Yup.string().required("Last name is required"),
-    email: Yup.string()
-        .required("Email is required")
-        .email("Please enter valid email"),
-    mobileNumber: Yup.string()
-        .required("Mobile no. is required")
-        .matches(phoneRegExp, "Please enter valid mobile no.")
-        .min(10, "Please enter valid mobile no.")
-        .max(10, "Please enter valid mobile no."),
-    dob: Yup.string().required("DOB is required"),
-    role: Yup.string().required("Role is required"),
-    pic: Yup.string(),
-    id: Yup.string().required()
+    id: Yup.string()
 });
