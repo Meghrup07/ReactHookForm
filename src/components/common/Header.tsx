@@ -12,6 +12,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useDispatch } from "react-redux";
 import { authAction } from "../../shared/store/slice/auth";
+import { toast } from "react-toastify";
 
 const pages = ["Users", "Add User"];
 
@@ -30,8 +31,15 @@ function Header() {
     setAnchorElNav(null);
   };
 
-  const logoutHandler = () => {
-    dispatch(authAction.logout());
+
+  const logoutHandler = async () => {
+    try {
+      await dispatch(authAction.logout());
+      localStorage.removeItem('token')
+      toast.success("Logout Successfully!")
+    } catch (error: any) {
+      toast.error(error)
+    }
   };
 
   return (

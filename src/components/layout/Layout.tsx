@@ -1,23 +1,23 @@
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import { Outlet, useNavigate } from 'react-router-dom'
-import Header from '../components/header/Header';
+import Header from '../common/Header';
 
 function Layout() {
 
     const navigate = useNavigate()
 
-    const isAuth = useSelector((state: any) => state.auth.isAuthenicated);
+    const { token } = useSelector((state: any) => state.auth);
 
     useEffect(() => {
-        if (!isAuth) {
+        if (!token) {
             navigate("/login")
         }
-    }, [isAuth])
+    }, [token])
 
     return (
         <div>
-            {isAuth ?
+            {token ?
                 <>
                     <Header />
                     <Outlet />

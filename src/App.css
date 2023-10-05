@@ -62,10 +62,97 @@
   object-fit: cover;
 }
 
-.card{
+.card {
   margin: auto;
 }
 
-.navbar{
-  background-color:#e3f2fd;
+.navbar {
+  background-color: #e3f2fd;
 }
+
+a {
+  text-decoration: none !important;
+  color: #fff !important;
+  display: block;
+  margin: 0 10px;
+}
+
+.mobile-link {
+  color: #000 !important;
+}
+
+.spinner {
+  margin: 100px auto;
+  width: 50px;
+  height: 60px;
+  text-align: center;
+  font-size: 10px;
+}
+
+.spinner>div {
+  background-color: #00d1b2;
+  height: 100%;
+  width: 6px;
+  margin: 0 2px;
+  display: inline-block;
+  -webkit-animation: stretchDelay 1.2s infinite ease-in-out;
+  animation: stretchDelay 1.2s infinite ease-in-out;
+}
+
+.spinner .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+
+.spinner .rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+
+.spinner .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+
+.spinner .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes stretchDelay {
+
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+
+@keyframes stretchDelay {
+
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
+}
+
+.MuiStack-root {
+  padding: 0 !important;
+  overflow: visible !important;
+}
+
+.MuiTextField-root {
+  min-width: 100% !important;
+}
+

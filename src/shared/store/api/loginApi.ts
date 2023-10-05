@@ -1,19 +1,18 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { TLogin, TLoginResponse } from "../../../types/types";
-import { baseQueryWithReauth } from "../interceptor/interceptor";
+import { createApi } from "@reduxjs/toolkit/query/react";
+import { TLogin, TLoginResponse } from "../../types/types";
+import { baseApiQuery } from "../interceptor/interceptor";
 
+
+const userService = "/user-service/api/v1"
 
 export const authApi = createApi({
     reducerPath: 'authApi',
-    baseQuery: baseQueryWithReauth,
-    // fetchBaseQuery({
-    //     baseUrl: ''
-    // }),
+    baseQuery: baseApiQuery,
     tagTypes: ["Posts"],
     endpoints: (builder) => ({
         login: builder.mutation<TLoginResponse, TLogin>({
             query: (user) => ({
-                url: "/user/login",
+                url: userService + "/user/login",
                 method: "POST",
                 body: user
             })

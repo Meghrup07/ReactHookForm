@@ -1,8 +1,8 @@
 import { Button, Card, Container, Typography } from "@mui/material";
 import { skipToken } from "@reduxjs/toolkit/dist/query";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetSingeUserQuery } from "../../shared/store/api/api";
-
+import { useGetSingeUserQuery } from "../../../shared/store/api/api";
+import dayjs from "dayjs";
 
 function UserInfo() {
   const { id } = useParams();
@@ -48,7 +48,7 @@ function UserInfo() {
 
               <div className="card-description-social">
                 <Typography className="card-description-social-follow">
-                  DOB: {data.dob}
+                  DOB: {dayjs(data.dob).format("DD/MM/YYYY")}
                 </Typography>
               </div>
             </div>

@@ -16,21 +16,29 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
-import { useDeleteUserMutation, useGetUserQuery } from "../../shared/store/api/api";
+import { useDeleteUserMutation, useGetUserQuery } from "../../../shared/store/api/api";
+import dayjs from "dayjs";
+// import { useGetMemberQuery } from "../../../shared/store/api/member";
+import { toast } from "react-toastify";
 
 function UserList() {
   const navigate = useNavigate();
   const { data } = useGetUserQuery();
 
+  // const { data: memberData } = useGetMemberQuery();
+  // console.log("🚀 ~ file: UserList.tsx:28 ~ UserList ~  memberData:", memberData)
+
   const [deletePost] = useDeleteUserMutation();
 
-  const deleteHandler = (id: any) => {
-    if (window.confirm("Do you really want to delete?")) {
-      deletePost(id).unwrap().then((res) => {
-        alert("Delete Sucessfully!")
-      }).catch((error) => {
-        alert(error)
-      })
+  const deleteHandler = async (id: any) => {
+    try {
+      if (window.confirm("Do you really want to delete?")) {
+        await deletePost(id).unwrap().then(() => {
+          toast.success("User Deleted Successfully!")
+        })
+      }
+    } catch (error: any) {
+      toast.error(error)
     }
   }
 
@@ -71,7 +79,7 @@ function UserList() {
                   </TableCell>
                   <TableCell>{user.email}</TableCell>
                   <TableCell>{user.mobileNumber}</TableCell>
-                  <TableCell>{user.dob}</TableCell>
+                  <TableCell>{dayjs(user.dob).format("DD/MM/YYYY")}</TableCell>
                   <TableCell>
                     <Button onClick={() => navigate(`/userInfo/${user.id}`)}>
                       <Tooltip title="View" placement="top">

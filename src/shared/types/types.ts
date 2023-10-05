@@ -1,5 +1,5 @@
 import * as Yup from "yup"
-import { loginValidationSchema } from "../shared/validations/Validations";
+import { loginValidationSchema } from "../validations/Validations";
 
 export type TUserDetails = {
     id: string,
