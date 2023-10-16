@@ -13,8 +13,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { useDispatch } from "react-redux";
 import { authAction } from "../../shared/store/slice/auth";
 import { toast } from "react-toastify";
-
-const pages = ["Users", "Add User"];
+import { Link } from "react-router-dom";
 
 function Header() {
   const dispatch = useDispatch();
@@ -93,23 +92,15 @@ function Header() {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link to={""}>Users</Link>
+                <Link to={"/gallery"}>Gallery</Link>
+              </MenuItem>
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            <Link to={""}>Users</Link>
+            <Link to={"/gallery"}>Gallery</Link>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "flex" } }}>
             <Button onClick={logoutHandler} color="warning" variant="contained">

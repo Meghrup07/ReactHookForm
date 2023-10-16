@@ -8,6 +8,7 @@ import AddUser from "./components/pages/users/AddUser";
 import Layout from "./components/layout/Layout";
 import NotFound from "./components/pages/NotFound";
 import { ToastContainer } from "react-toastify";
+import Gallery from "./components/pages/gallery/Index";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="userInfo/:id" element={<UserInfo />} />
           <Route path="add" element={<AddUser />} />
           <Route path="edit/:id" element={<AddUser />} />
+          <Route path="gallery" element={<Gallery />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
