@@ -21,7 +21,7 @@ function Galleries(props: any) {
                 toast.success("Gallery deleted successfully!")
             }
         } catch (error: any) {
-            toast.error(error)
+            toast.error('Something went wrong. Please try again later.')
         }
     }
 

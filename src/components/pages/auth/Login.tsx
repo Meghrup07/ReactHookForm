@@ -33,7 +33,7 @@ function Login() {
         toast.success("Login successfull!")
       })
     } catch (error) {
-      toast.error('Invalid email or password')
+      toast.error('Something went wrong. Please try again later.')
     }
   };
 

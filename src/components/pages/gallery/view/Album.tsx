@@ -28,7 +28,7 @@ function Album(props: any) {
                 })
             }
         } catch (error: any) {
-            toast.error(error)
+            toast.error('Something went wrong. Please try again later.')
         }
     }
 
