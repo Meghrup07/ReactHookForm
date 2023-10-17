@@ -16,18 +16,11 @@ export const galleryApi = createApi({
             }),
             providesTags: ["gallery"]
         }),
-        createAlbum: builder.mutation<any, TAlbum>({
+        createAlbum: builder.mutation<TAlbumList, TAlbum>({
             query: (album) => ({
                 url: instituteService + '/albums/add',
                 method: "POST",
                 body: album
-            }),
-            invalidatesTags: ["gallery"]
-        }),
-        deleteAlbum: builder.mutation<void, string>({
-            query: (id) => ({
-                url: instituteService + `/albums/delete/${id}`,
-                method: "PATCH",
             }),
             invalidatesTags: ["gallery"]
         }),
@@ -39,6 +32,13 @@ export const galleryApi = createApi({
             }),
             invalidatesTags: ['gallery']
         }),
+        deleteAlbum: builder.mutation<void, string>({
+            query: (id) => ({
+                url: instituteService + `/albums/delete/${id}`,
+                method: "PATCH",
+            }),
+            invalidatesTags: ["gallery"]
+        }),
         getGallery: builder.query<TGalleryList, void>({
             query: (albumId: any) => ({
                 url: instituteService + `/gallery/get-list/${albumId}`,
@@ -46,7 +46,7 @@ export const galleryApi = createApi({
             }),
             providesTags: ["gallery"]
         }),
-        createGallery: builder.mutation<any, TGalleryCreate>({
+        createGallery: builder.mutation<TGalleryList, TGalleryCreate>({
             query: (gallery) => ({
                 url: instituteService + '/gallery/add',
                 method: "POST",
