@@ -46,11 +46,11 @@ export const galleryApi = createApi({
             }),
             providesTags: ["gallery"]
         }),
-        createGallery: builder.mutation<TGalleryList, TGalleryCreate>({
+        createGallery: builder.mutation<TGalleryList, any>({
             query: (gallery) => ({
                 url: instituteService + '/gallery/add',
                 method: "POST",
-                body: gallery
+                body: gallery,
             }),
             invalidatesTags: ['gallery']
         }),

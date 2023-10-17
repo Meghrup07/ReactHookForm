@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 
 function Album(props: any) {
 
-    const { getAlbumId
+    const { getAlbumId, onCreateAlbumId
     } = props
 
     const [albumData, setAlbumData] = useState()
@@ -41,6 +41,10 @@ function Album(props: any) {
         getAlbumId(e)
     }
 
+    const onCreateGalleryHandle = (id: any) => {
+        onCreateAlbumId(id)
+    }
+
     return (
         <>
             <Card variant="outlined" sx={{ p: 2 }}>
@@ -53,7 +57,7 @@ function Album(props: any) {
                                     <Button variant="text" onClick={(e) => onHandleClickGetId(list._id)}>{list.albumName}</Button>
                                 </Typography>
                                 <div className='action_wraper'>
-                                    <Button>
+                                    <Button onClick={() => onCreateGalleryHandle(list._id)}>
                                         <Tooltip title="Creat" placement="top">
                                             <AddIcon color="info" />
                                         </Tooltip>

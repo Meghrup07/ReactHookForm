@@ -6,8 +6,13 @@ import { TGalleryCreate } from '../../../../shared/types/gallery';
 import { toast } from 'react-toastify';
 import { Button, Card, Grid, Typography } from '@mui/material';
 import { Form } from '../../../common/Form';
+import { useCreateGalleryMutation } from '../../../../shared/store/api/gallery';
 
-function AddGallery() {
+function AddGallery(props: any) {
+
+    const { albumId } = props
+
+    const [addGallery] = useCreateGalleryMutation()
 
     const galleryFormValues = useForm({
         mode: "all",
@@ -19,13 +24,22 @@ function AddGallery() {
         resolver: yupResolver(galleryValidationSchema)
     });
 
-    const formSubmitHandler = async (data: TGalleryCreate) => {
+    const formSubmitHandler = async (data: any) => {
         try {
-            console.log("Data", data)
+
+            const formData = new FormData();
+            formData.append("file", data?.file as File);
+            formData.append("title", data.title);
+            formData.append("description", data.description);
+            formData.append("albumId", albumId)
+
+            await addGallery(formData).unwrap();
+
             toast.success("Album created successfully!");
             galleryFormValues.reset();
         } catch (error: any) {
             toast.error('Something went wrong. Please try again later.')
+            galleryFormValues.reset();
         }
     };
 

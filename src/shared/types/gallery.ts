@@ -6,7 +6,12 @@ export type TAlbum = Yup.InferType<typeof albumValidationSchema>;
 
 export type TAlbumUpdate = Yup.InferType<typeof albumUpdateValidationSchema>;
 
-export type TGalleryCreate = Yup.InferType<typeof galleryValidationSchema>;
+export type TGalleryCreate = {
+    title: string,
+    description: string,
+    file: string | undefined
+}
+    // Yup.InferType<typeof galleryValidationSchema>;
 
 export type TAlbumList = {
     message: string,
