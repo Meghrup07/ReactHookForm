@@ -1,17 +1,29 @@
 import { Button, Card, Tooltip, Typography } from '@mui/material'
 import { skipToken } from '@reduxjs/toolkit/dist/query';
 import React from 'react'
-import { useGetGalleryQuery } from '../../../../shared/store/api/gallery'
+import { useDeleteGalleryMutation, useGetGalleryQuery } from '../../../../shared/store/api/gallery'
 import GalleryNotFound from '../GalleryNotFound';
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import { toast } from 'react-toastify';
 
 function Galleries(props: any) {
     const { albumId } = props
 
     const { data: galleryList, isSuccess } = useGetGalleryQuery(albumId ?? skipToken);
-
     const galleryDataList = galleryList?.result || []
+
+    const [deleteGallery] = useDeleteGalleryMutation()
+    const onDeleteGalleryHandle = async (id: any) => {
+        try {
+            if (window.confirm("Do you really want to delete?")) {
+                await deleteGallery(id).unwrap();
+                toast.success("Gallery deleted successfully!")
+            }
+        } catch (error: any) {
+            toast.error(error)
+        }
+    }
 
     return (
         <>
@@ -19,7 +31,7 @@ function Galleries(props: any) {
                 {isSuccess ?
                     <>
                         {galleryDataList?.map((list: any) => (
-                            <Card key={list._id} variant="outlined" sx={{ p: 4 }}>
+                            <Card key={list._id} variant="outlined" sx={{ p: 4, mt: 2 }}>
                                 <div className='galleryList'>
                                     <div className='title_wraper'>
                                         <div className="card-description-social">
@@ -38,7 +50,7 @@ function Galleries(props: any) {
                                                     <EditIcon color="primary" />
                                                 </Tooltip>
                                             </Button>
-                                            <Button sx={{ ml: 1 }}>
+                                            <Button onClick={() => onDeleteGalleryHandle(list._id)} sx={{ ml: 1 }}>
                                                 <Tooltip title="Delete" placement="top">
                                                     <DeleteIcon color="error" />
                                                 </Tooltip>

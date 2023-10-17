@@ -1,9 +1,12 @@
 import * as Yup from "yup"
-import { albumUpdateValidationSchema, albumValidationSchema } from "../validations/AlbumGallery";
+import { albumUpdateValidationSchema, albumValidationSchema, galleryValidationSchema } from "../validations/AlbumGallery";
+import { type } from "os";
 
 export type TAlbum = Yup.InferType<typeof albumValidationSchema>;
 
 export type TAlbumUpdate = Yup.InferType<typeof albumUpdateValidationSchema>;
+
+export type TGalleryCreate = Yup.InferType<typeof galleryValidationSchema>;
 
 export type TAlbumList = {
     message: string,
