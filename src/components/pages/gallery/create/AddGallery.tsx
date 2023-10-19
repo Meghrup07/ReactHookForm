@@ -24,8 +24,36 @@ function AddGallery(props: any) {
         resolver: yupResolver(galleryValidationSchema)
     });
 
+
+    // const getData = (data: any) => {
+    //     let reqBody = {};
+    //     reqBody = {
+    //         title: data.title,
+    //         description: data.description,
+    //         file: data.file,
+    //         albumId: albumId
+    //     }
+    //     return reqBody;
+    // }
+
+    // const requestBody = getData(data);
+
     const formSubmitHandler = async (data: any) => {
         try {
+
+            // const fileKeys = Object.entries(requestBody);
+            // let formData = new FormData();
+
+            // fileKeys.forEach((elm: any) => {
+            //     if (Array.isArray(elm[1])) {
+            //         if (elm[1] !== undefined)
+            //             elm[1].forEach((file) => {
+            //                 formData.append(elm[0], file);
+            //             });
+            //     } else {
+            //         if (elm[1] !== undefined) formData.append(elm[0], elm[1]);
+            //     }
+            // });
 
             const formData = new FormData();
             formData.append("file", data?.file as File);
@@ -58,7 +86,7 @@ function AddGallery(props: any) {
                             <Form.Input label="Description" name="description" />
                         </Grid>
                         <Grid item xs={12} sm={6} sx={{ mb: 1 }}>
-                            <Form.Input type="file" label="" name="file" />
+                            <Form.FileInput multiple name="file" />
                         </Grid>
                     </Grid>
                     <div className="mt-4 text-center">
