@@ -25,44 +25,42 @@ function AddGallery(props: any) {
     });
 
 
-    // const getData = (data: any) => {
-    //     let reqBody = {};
-    //     reqBody = {
-    //         title: data.title,
-    //         description: data.description,
-    //         file: data.file,
-    //         albumId: albumId
-    //     }
-    //     return reqBody;
-    // }
-
-    // const requestBody = getData(data);
+    const getData = (data: any) => {
+        let reqBody = {};
+        reqBody = {
+            title: data.title,
+            description: data.description,
+            file: data.file,
+            albumId: albumId
+        }
+        return reqBody;
+    }
 
     const formSubmitHandler = async (data: any) => {
         try {
+            const requestBody = getData(data);
+            const fileKeys = Object.entries(requestBody);
+            let formData = new FormData();
 
-            // const fileKeys = Object.entries(requestBody);
-            // let formData = new FormData();
+            fileKeys.forEach((elm: any) => {
+                if (Array.isArray(elm[1])) {
+                    if (elm[1] !== undefined)
+                        elm[1].forEach((file) => {
+                            formData.append(elm[0], file);
+                        });
+                } else {
+                    if (elm[1] !== undefined) formData.append(elm[0], elm[1]);
+                }
+            });
 
-            // fileKeys.forEach((elm: any) => {
-            //     if (Array.isArray(elm[1])) {
-            //         if (elm[1] !== undefined)
-            //             elm[1].forEach((file) => {
-            //                 formData.append(elm[0], file);
-            //             });
-            //     } else {
-            //         if (elm[1] !== undefined) formData.append(elm[0], elm[1]);
-            //     }
-            // });
 
-            const formData = new FormData();
-            formData.append("file", data?.file as File);
-            formData.append("title", data.title);
-            formData.append("description", data.description);
-            formData.append("albumId", albumId)
+            // const formData = new FormData();
+            // formData.append("file", data?.file as File);
+            // formData.append("title", data.title);
+            // formData.append("description", data.description);
+            // formData.append("albumId", albumId)
 
             await addGallery(formData).unwrap();
-
             toast.success("Album created successfully!");
             galleryFormValues.reset();
         } catch (error: any) {

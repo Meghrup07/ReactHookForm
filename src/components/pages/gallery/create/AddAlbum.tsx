@@ -12,7 +12,9 @@ function AddAlbum(props: any) {
 
     const { onSetUpdateValue, setOpenValue } = props
     const albumId = onSetUpdateValue?._id;
-    const albumName = onSetUpdateValue?.albumName;
+    console.log("🚀 ~ file: AddAlbum.tsx:15 ~ AddAlbum ~ albumId:", albumId)
+    const albumNameNew = onSetUpdateValue?.albumName;
+    console.log("🚀 ~ file: AddAlbum.tsx:17 ~ AddAlbum ~ albumName:", albumNameNew)
 
     const [newAlbum] = useCreateAlbumMutation()
 
@@ -23,14 +25,24 @@ function AddAlbum(props: any) {
         defaultValues: {
             albumName: ""
         },
+        values: {
+            albumName: albumNameNew
+        },
         resolver: yupResolver(albumValidationSchema)
     });
 
     const formSubmitHandler = async (data: TAlbum) => {
         try {
-            await newAlbum(data).unwrap();
-            toast.success("Album created successfully!");
-            albumFormValues.reset();
+            if (albumId) {
+                await updateAlbum({ newAlbumName: data.albumName, albumId: albumId }).unwrap();
+                toast.success("Album updated successfully!");
+                albumFormValues.reset({ albumName: "" });
+            }
+            else {
+                await newAlbum(data).unwrap();
+                toast.success("Album created successfully!");
+                albumFormValues.reset();
+            }
         } catch (error: any) {
             toast.error('Something went wrong. Please try again later.')
         }
