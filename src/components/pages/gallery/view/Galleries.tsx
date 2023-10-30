@@ -8,7 +8,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { toast } from 'react-toastify';
 
 function Galleries(props: any) {
-    const { albumId } = props
+    const { albumId, getGalleryId } = props
 
     const { data: galleryList, isSuccess } = useGetGalleryQuery(albumId ?? skipToken);
     const galleryDataList = galleryList?.result || []
@@ -23,6 +23,10 @@ function Galleries(props: any) {
         } catch (error: any) {
             toast.error('Something went wrong. Please try again later.')
         }
+    }
+
+    const onEditGalleryHandle = (id: any) => {
+        getGalleryId(id)
     }
 
     return (
@@ -45,6 +49,7 @@ function Galleries(props: any) {
                                         <div className='action-buttons'>
                                             <Button
                                                 sx={{ ml: 1 }}
+                                                onClick={() => onEditGalleryHandle(list._id)}
                                             >
                                                 <Tooltip title="Edit" placement="top">
                                                     <EditIcon color="primary" />

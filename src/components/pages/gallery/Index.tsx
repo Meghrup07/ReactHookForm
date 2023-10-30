@@ -8,6 +8,7 @@ function Gallery() {
 
     const [albumId, setAlbumId] = useState()
     const [albumMenuId, setMenuAlbumId] = useState();
+    const [galleryId, setGalleryId] = useState();
 
     const handleClickGetId = (e: any) => {
         setAlbumId(e)
@@ -15,6 +16,10 @@ function Gallery() {
 
     const onCreateGalleryHandle = (id: any) => {
         setMenuAlbumId(id)
+    }
+
+    const onUpdateGalleryHandle = (id: any) => {
+        setGalleryId(id)
     }
 
     return (
@@ -29,8 +34,8 @@ function Gallery() {
                             <Album getAlbumId={handleClickGetId} onCreateAlbumId={onCreateGalleryHandle} />
                         </div>
                         <div className='col-md-8'>
-                            <Galleries albumId={albumId} />
-                            <AddGallery albumId={albumMenuId} />
+                            <Galleries getGalleryId={onUpdateGalleryHandle} albumId={albumId} />
+                            <AddGallery galleryId={galleryId} albumId={albumMenuId} />
                         </div>
                     </div>
                 </Card>

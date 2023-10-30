@@ -10,7 +10,7 @@ import { useCreateGalleryMutation } from '../../../../shared/store/api/gallery';
 
 function AddGallery(props: any) {
 
-    const { albumId } = props
+    const { albumId, galleryId } = props
 
     const [addGallery] = useCreateGalleryMutation()
 
