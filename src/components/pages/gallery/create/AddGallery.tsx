@@ -11,7 +11,6 @@ import { useCreateGalleryMutation } from '../../../../shared/store/api/gallery';
 function AddGallery(props: any) {
 
     const { albumId, galleryId } = props
-
     const [addGallery] = useCreateGalleryMutation()
 
     const galleryFormValues = useForm({
@@ -30,8 +29,8 @@ function AddGallery(props: any) {
         reqBody = {
             title: data.title,
             description: data.description,
-            file: data.file,
-            albumId: albumId
+            albumId: albumId,
+            file: data?.file
         }
         return reqBody;
     }
@@ -52,14 +51,6 @@ function AddGallery(props: any) {
                     if (elm[1] !== undefined) formData.append(elm[0], elm[1]);
                 }
             });
-
-
-            // const formData = new FormData();
-            // formData.append("file", data?.file as File);
-            // formData.append("title", data.title);
-            // formData.append("description", data.description);
-            // formData.append("albumId", albumId)
-
             await addGallery(formData).unwrap();
             toast.success("Album created successfully!");
             galleryFormValues.reset();
@@ -90,6 +81,9 @@ function AddGallery(props: any) {
                     <div className="mt-4 text-center">
                         <Button type="submit" variant="contained" color="success">
                             Save
+                        </Button>
+                        <Button sx={{ ml: 2 }} type="button" variant="contained" color="error">
+                            Cancel
                         </Button>
                     </div>
                 </Form>

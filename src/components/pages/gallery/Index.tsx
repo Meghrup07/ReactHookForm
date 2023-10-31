@@ -9,13 +9,17 @@ function Gallery() {
     const [albumId, setAlbumId] = useState()
     const [albumMenuId, setMenuAlbumId] = useState();
     const [galleryId, setGalleryId] = useState();
+    const [openGalleryForm, setOpenGalleryForm] = useState(false);
 
     const handleClickGetId = (e: any) => {
         setAlbumId(e)
+        setOpenGalleryForm(false);
     }
 
     const onCreateGalleryHandle = (id: any) => {
         setMenuAlbumId(id)
+        setOpenGalleryForm(true);
+
     }
 
     const onUpdateGalleryHandle = (id: any) => {
@@ -34,8 +38,11 @@ function Gallery() {
                             <Album getAlbumId={handleClickGetId} onCreateAlbumId={onCreateGalleryHandle} />
                         </div>
                         <div className='col-md-8'>
-                            <Galleries getGalleryId={onUpdateGalleryHandle} albumId={albumId} />
-                            <AddGallery galleryId={galleryId} albumId={albumMenuId} />
+                            {openGalleryForm ?
+                                <AddGallery galleryId={galleryId} albumId={albumMenuId} />
+                                :
+                                <Galleries getGalleryId={onUpdateGalleryHandle} albumId={albumId} />
+                            }
                         </div>
                     </div>
                 </Card>

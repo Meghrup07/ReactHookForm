@@ -12,9 +12,7 @@ function AddAlbum(props: any) {
 
     const { onSetUpdateValue, setOpenValue } = props
     const albumId = onSetUpdateValue?._id;
-    console.log("🚀 ~ file: AddAlbum.tsx:15 ~ AddAlbum ~ albumId:", albumId)
     const albumNameNew = onSetUpdateValue?.albumName;
-    console.log("🚀 ~ file: AddAlbum.tsx:17 ~ AddAlbum ~ albumName:", albumNameNew)
 
     const [newAlbum] = useCreateAlbumMutation()
 
