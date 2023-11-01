@@ -43,6 +43,7 @@ function AddAlbum(props: any) {
             }
         } catch (error: any) {
             toast.error('Something went wrong. Please try again later.')
+            albumFormValues.reset({ albumName: "" });
         }
     };
 

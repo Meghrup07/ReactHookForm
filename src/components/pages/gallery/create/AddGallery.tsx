@@ -6,18 +6,27 @@ import { TGalleryCreate } from '../../../../shared/types/gallery';
 import { toast } from 'react-toastify';
 import { Button, Card, Grid, Typography } from '@mui/material';
 import { Form } from '../../../common/Form';
-import { useCreateGalleryMutation } from '../../../../shared/store/api/gallery';
+import { useCreateGalleryMutation, useUpdateGalleryMutation } from '../../../../shared/store/api/gallery';
 
 function AddGallery(props: any) {
 
-    const { albumId, galleryId } = props
+    const { albumId, galleryData } = props
     const [addGallery] = useCreateGalleryMutation()
+
+    const [updateGallery] = useUpdateGalleryMutation()
+    const galleryId = galleryData?._id
+    console.log("🚀 ~ file: AddGallery.tsx:18 ~ AddGallery ~ galleryId:", galleryId)
 
     const galleryFormValues = useForm({
         mode: "all",
         defaultValues: {
             title: "",
             description: "",
+            file: ""
+        },
+        values: {
+            title: galleryData?.title,
+            description: galleryData?.description,
             file: ""
         },
         resolver: yupResolver(galleryValidationSchema)
@@ -35,28 +44,59 @@ function AddGallery(props: any) {
         return reqBody;
     }
 
+    const updateGalleryData = (data: any) => {
+        let reqBody = {};
+        reqBody = {
+            newTitle: data.title,
+            newDescription: data.description,
+            file: data?.file,
+            galleryId: galleryId,
+        }
+        return reqBody;
+    }
+
     const formSubmitHandler = async (data: any) => {
         try {
-            const requestBody = getData(data);
-            const fileKeys = Object.entries(requestBody);
-            let formData = new FormData();
-
-            fileKeys.forEach((elm: any) => {
-                if (Array.isArray(elm[1])) {
-                    if (elm[1] !== undefined)
-                        elm[1].forEach((file) => {
-                            formData.append(elm[0], file);
-                        });
-                } else {
-                    if (elm[1] !== undefined) formData.append(elm[0], elm[1]);
-                }
-            });
-            await addGallery(formData).unwrap();
-            toast.success("Album created successfully!");
-            galleryFormValues.reset();
+            if (galleryData) {
+                const requestBody = updateGalleryData(data);
+                const fileKeys = Object.entries(requestBody);
+                let formData = new FormData();
+                fileKeys.forEach((elm: any) => {
+                    if (Array.isArray(elm[1])) {
+                        if (elm[1] !== undefined)
+                            elm[1].forEach((file) => {
+                                formData.append(elm[0], file);
+                            });
+                    } else {
+                        if (elm[1] !== undefined) formData.append(elm[0], elm[1]);
+                    }
+                });
+                await updateGallery(formData).unwrap();
+                toast.success("Gallery updated successfully!");
+                galleryFormValues.reset({ title: "", description: "", file: "" });
+            }
+            else {
+                const requestBody = getData(data);
+                const fileKeys = Object.entries(requestBody);
+                let formData = new FormData();
+                fileKeys.forEach((elm: any) => {
+                    if (Array.isArray(elm[1])) {
+                        if (elm[1] !== undefined)
+                            elm[1].forEach((file) => {
+                                formData.append(elm[0], file);
+                            });
+                    } else {
+                        if (elm[1] !== undefined) formData.append(elm[0], elm[1]);
+                    }
+                });
+                await addGallery(formData).unwrap();
+                toast.success("Gallery created successfully!");
+                galleryFormValues.reset();
+            }
         } catch (error: any) {
             toast.error('Something went wrong. Please try again later.')
             galleryFormValues.reset();
+            galleryFormValues.reset({ title: "", description: "", file: "" });
         }
     };
 
