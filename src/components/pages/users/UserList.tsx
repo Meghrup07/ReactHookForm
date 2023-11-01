@@ -18,16 +18,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useNavigate } from "react-router-dom";
 import { useDeleteUserMutation, useGetUserQuery } from "../../../shared/store/api/api";
 import dayjs from "dayjs";
-// import { useGetMemberQuery } from "../../../shared/store/api/member";
 import { toast } from "react-toastify";
 
 function UserList() {
   const navigate = useNavigate();
   const { data } = useGetUserQuery();
-
-  // const { data: memberData } = useGetMemberQuery();
-  // console.log("🚀 ~ file: UserList.tsx:28 ~ UserList ~  memberData:", memberData)
-
   const [deletePost] = useDeleteUserMutation();
 
   const deleteHandler = async (id: any) => {

@@ -9,6 +9,7 @@ import Layout from "./components/layout/Layout";
 import NotFound from "./components/pages/NotFound";
 import { ToastContainer } from "react-toastify";
 import Gallery from "./components/pages/gallery/Index";
+import Member from "./components/pages/member/Member";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="add" element={<AddUser />} />
           <Route path="edit/:id" element={<AddUser />} />
           <Route path="gallery" element={<Gallery />} />
+          <Route path="member" element={<Member />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

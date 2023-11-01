@@ -11,7 +11,7 @@ export type TGalleryCreate = {
     description: string,
     file: string | undefined
 }
-    // Yup.InferType<typeof galleryValidationSchema>;
+// Yup.InferType<typeof galleryValidationSchema>;
 
 export type TAlbumList = {
     message: string,

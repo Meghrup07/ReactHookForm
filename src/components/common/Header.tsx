@@ -95,12 +95,14 @@ function Header() {
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link to={""}>Users</Link>
                 <Link to={"/gallery"}>Gallery</Link>
+                <Link to={"/member"}>Member</Link>
               </MenuItem>
             </Menu>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "none", md: "flex" } }}>
             <Link to={""}>Users</Link>
             <Link to={"/gallery"}>Gallery</Link>
+            <Link to={"/member"}>Member</Link>
           </Box>
           <Box sx={{ flexGrow: 0, display: { xs: "flex" } }}>
             <Button onClick={logoutHandler} color="warning" variant="contained">
